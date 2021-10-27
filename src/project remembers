@@ -1,0 +1,20 @@
+//get user by id
+getUserById = (req, res) => {
+    let user = req.params.userId;
+    let userfilter = userService.getUserById(user);
+    // if (userService.isEmailExist(userfilter));
+    res.status(status.OK).send(userfilter);
+};
+
+const getUserById = (email) => {
+    let userStatus = userModel.getuser(email)
+    return userStatus;
+};
+
+const getuser = (email) => {
+    return users.filter(u => u.email === email);
+};
+
+// const deleteUser = (id) => {
+//     return users.pop(id);
+// };
