@@ -11,7 +11,6 @@ const login = (email, password) => {
     }
     //create token
     let token = jwt.sign({ user }, process.env.JWT_SECRET_KEY, { expiresIn: '2m' });
-
     return {
         accessToken: token
     };
@@ -20,4 +19,4 @@ const login = (email, password) => {
 
 module.exports = {
     login
-};
+}

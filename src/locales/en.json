@@ -1,0 +1,13 @@
+{
+    "unkownApiError": "Api not found",
+    "login": "Good! you are successfully logged in",
+    "signUp": "Good! you successfully are signed up",
+    "userNotExist": "This user does not exist",
+    "userExists": "This user is already exist",
+    "userIsCreated": "This user has successfully created",
+    "CreateError": "something went wrong",
+    "userUpdated": "The User has been updated",
+    "UpdateError": "This user does not exist",
+    "deleteUser": "This user has been deleted",
+    "deleteError": "This user doest not exist"
+}

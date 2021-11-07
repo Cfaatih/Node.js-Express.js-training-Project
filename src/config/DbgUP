@@ -1,0 +1,115 @@
+// const oracledb = require('oracledb');
+// const host = '15.15.0.59:1521';
+// const database = 'students';
+// const username = 'abdifatah';
+// const password = 'abdifatah';
+
+// checkConnection();
+
+
+// async function checkConnection() {
+//     let connection;
+//     try {
+//         oracledb.initOracleClient({ libdir: 'D:\Training@Taaj\nodejs\instantclient_21_3' });
+//         connection = await oracledb.getConnection({
+//             user: username,
+//             password: password,
+//             connectString: host + '/' + database
+//         });
+//         console.log('connected database');
+//         let result = await connection.execute(`select * from mytable`);
+//         console.log(result);
+//         // await connection.close();
+
+//     } catch (err) {
+//         console.log(err);
+//     } finally {
+//         if (connection) {
+//             await connection.close();
+//         }
+//     }
+// }
+
+const getAllData = (query) => {
+        console.log(1);
+        oracledb.initOracleClient({ libdir: 'D:\Training@Taaj\nodejs\instantclient_21_3' })
+        oracledb.getConnection({
+                user: username,
+                password: password,
+                connectString: host + '/' + database
+            })
+            .then(connection => {
+                return connection.execute(query)
+                    .then(result => {
+                        console.log(result.rows);
+                        return connection.close();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        return connection.close();
+                    })
+            })
+    }
+    // getAllData(`select * from mytable`);
+    // module.exports = {
+    //         getAllData
+    //     }
+    // async function executeQuery(query) {
+    //     let connection;
+    //     try {
+    //         oracledb.initOracleClient({ libdir: 'D:\Training@Taaj\nodejs\instantclient_21_3' });
+    //         connection = await oracledb.getConnection({
+    //             user: username,
+    //             password: password,
+    //             connectString: host + '/' + database
+    //         });
+    //         console.log('connected database');
+    //         let result = await connection.execute(query);
+    //         console.log(result);
+    //         // await connection.close();
+
+//     } catch (err) {
+//         console.log(err);
+//     } finally {
+//         if (connection) {
+//             await connection.close();
+//         }
+//     }
+// }
+
+// module.exports = checkConnection;
+// module.exports = {
+//     executeQuery
+// };  executeQuery
+// };  executeQuery
+// };  executeQuery
+// };
+
+// let users = [{
+//     "id": "1",
+//     "firstName": "Abdifatah",
+//     "middleName": "Mohamed",
+//     "lastName": "Abdifatah",
+//     "email": "ccaraye@gmail.com",
+//     "age": "25",
+//     "password": "12345",
+//     "roles": "admin"
+// }, {
+//     "id": "2",
+//     "firstName": "artan",
+//     "middleName": "Abdullahi",
+//     "lastName": "Mohamed",
+//     "email": "artan@gmail.com",
+//     "age": "20",
+//     "password": "6789",
+//     "roles": "user"
+// }, {
+//     "id": "3",
+//     "firstName": "sabarin",
+//     "middleName": "Mohamed",
+//     "lastName": "shiikh",
+//     "email": "sabarin@gmail.com",
+//     "age": "21",
+//     "password": "101112",
+//     "roles": "user"
+// }];

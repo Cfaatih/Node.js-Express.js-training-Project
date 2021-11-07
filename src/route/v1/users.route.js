@@ -11,7 +11,8 @@ const { userValidation } = require('../../validations');
 const { validate } = require('../../middlewares');
 const { authMiddleware } = require('../../middlewares')
 
-route.get('/', authMiddleware.auth, usersController.getAllUsers);
+//route.get('/', authMiddleware.auth, usersController.getAllUsers);
+route.get('/', usersController.getAllUsers);
 route.get('/:userId', usersController.getUserById);
 route.post('/create', validate(userValidation.createUser), usersController.create);
 route.patch('/update', validate(userValidation.updateUser), usersController.updateUser);

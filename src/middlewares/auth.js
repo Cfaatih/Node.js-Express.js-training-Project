@@ -12,7 +12,8 @@ const auth = (req, res, next) => {
     }
     let response = jwt.verify(token, process.env.JWT_SECRET_KEY);
     if (response) next();
-    throw new ApiError(401, "your token is expired, please logina again");
+    else { throw new ApiError(401, "your token is expired, please logina again"); }
+
 
     // try {
     //     let response = jwt.verify(token, process.env.JWT_SECRET_KEY);

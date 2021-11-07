@@ -6,7 +6,8 @@ const createUser = joi.object({
     middleName: joi.string().optional(),
     lastName: joi.string().required(),
     email: joi.string().email().required(),
-    age: joi.number().min(12).max(120)
+    age: joi.number().min(12).max(120),
+    roles: joi.string().required()
 });
 
 //validation for update user
@@ -15,7 +16,8 @@ const updateUser = joi.object({
     firstName: joi.string().required(),
     middleName: joi.string().optional(),
     lastName: joi.string().required(),
-    age: joi.number().min(12).max(120)
+    age: joi.number().min(12).max(120),
+    roles: joi.string().required()
 });
 
 //export the validatoins

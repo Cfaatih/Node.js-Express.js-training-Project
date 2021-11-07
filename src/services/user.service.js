@@ -18,7 +18,7 @@ const isIdExist = (id) => {
     }
 };
 
-const getAllUsers = () => {
+const getAllUsers = async() => {
     return userModel.getusers();
 };
 

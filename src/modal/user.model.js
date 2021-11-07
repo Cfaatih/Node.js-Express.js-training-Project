@@ -1,43 +1,15 @@
 //mydb
-// let admin = [{
-//         "email": "admin1@gmail.com",
-//     },
-//     {
-//         "email": "admin2@gmail.com",
-//         "password": "admin2"
-//     }
-//     "password": "admin1"
 
-// ];
-let users = [{
-    "id": "1",
-    "firstName": "Abdifatah",
-    "middleName": "Mohamed",
-    "lastName": "Abdifatah",
-    "email": "ccaraye@gmail.com",
-    "age": "25",
-    "password": "12345"
-}, {
-    "id": "2",
-    "firstName": "artan",
-    "middleName": "Abdullahi",
-    "lastName": "Mohamed",
-    "email": "artan@gmail.com",
-    "age": "20",
-    "password": "6789"
-}, {
-    "id": "3",
-    "firstName": "sabarin",
-    "middleName": "Mohamed",
-    "lastName": "shiikh",
-    "email": "sabarin@gmail.com",
-    "age": "21",
-    "password": "101112"
-}];
+const database = require('../config/database');
 
 //-----------------------------------------
-const getusers = () => {
-    return users;
+const getusers = async() => {
+    let query = `select * from USERS`;
+    let result = await database.executeQuery(query);
+    console.log(result);
+    return result;
+
+    // return users;
 };
 
 const getuser = (id) => {
@@ -70,12 +42,13 @@ const isIdExist = (id) => {
     return users.filter(u => u.id == id);
 };
 const getUserByEmailAndPassword = (email, password) => {
-    return users.filter(u => u.email === email && u.password === password);
+    // let query = `select email, password from USERS`;
+    // let result = database.executeQuery(query);
+
+    return result.filter(u => u.email === email && u.password === password);
 };
 
-const isAdmin = (email) => {
-    return admin.filter(u => u.email === email).length > 0;
-};
+
 
 module.exports = {
     getusers,
@@ -85,6 +58,5 @@ module.exports = {
     deleteUser,
     isEmailExist,
     isIdExist,
-    getUserByEmailAndPassword,
-    isAdmin
+    getUserByEmailAndPassword
 };

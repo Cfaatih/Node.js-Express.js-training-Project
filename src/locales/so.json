@@ -1,0 +1,13 @@
+{
+    "unkownApiError": "Api ma ahan mid jira",
+    "login": "Wacan! si guul leh ayaad u soo gashay",
+    "signUp": "Wacan! si guul leh ayaad isu diiwaan galisay",
+    "userNotExist": "Isticmaalahan ma jiro",
+    "userExists": "Isticmaalahan  horeybuu u jiray",
+    "userIsCreated": "Isticmaalahan si guul leh ayaa loo abuuray",
+    "CreateError": "waxbaa qaldamay",
+    "userUpdated": "Isticmaalaha waa la cusboonaysiiyay",
+    "UpdateError": "Isticmaalahan ma jiro",
+    "deleteUser": "Isticmaalahan waa la tirtiray",
+    "deleteError": "Isticmaalahan ma jiro"
+}

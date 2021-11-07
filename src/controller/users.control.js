@@ -4,23 +4,30 @@
 const status = require('http-status');
 const logger = require('../config/logger');
 const { userService } = require('../services');
-const{ApiError}=require('../payload/ApiError');
-const{ApiResponse}=require('../payload/ApiResponse');
+const { ApiError } = require('../payload/ApiError');
+const { ApiResponse } = require('../payload/ApiResponse');
+const { handleAsync } = require('../utils/util');
+
 //get all users
-getAllUsers = (req, res) => {
-    let users = userService.getAllUsers();
-    res.status(status.OK).send(new ApiResponse(status.OK,message="OK",users));
-};
+getAllUsers = handleAsync(async(req, res) => {
+    // let message = res.__('getUserByIdError')
+    // console.log(message);
+
+    let users = await userService.getAllUsers();
+
+    res.status(status.OK).send(new ApiResponse(status.OK, "ok", users));
+});
 
 //get user by ID
 getUserById = (req, res) => {
     let userId = req.params.userId;
     if (userService.isIdExist(userId)) {
         let userfilter = userService.getUserById(userId);
-        return res.status(status.OK).send(new ApiResponse(status.OK,message="OK", userfilter));
+        return res.status(status.OK).send(new ApiResponse(status.OK, "OK", userfilter));
     }
+
     return res.status(status.NOT_FOUND).
-    send(new ApiError(status.NOT_FOUND,message= "This user does not exist"));
+    send(new ApiError(status.NOT_FOUND, "This user does not exist"));
 };
 
 //create user
@@ -29,14 +36,14 @@ create = (req, res) => {
     let user = req.body;
     if (userService.isEmailExist(user.email)) {
         return res.status(status.NOT_ACCEPTABLE)
-        .send(new ApiError(status.NOT_ACCEPTABLE, message= 'User already exist'));
+            .send(new ApiError(status.NOT_ACCEPTABLE, 'User already exist'));
     }
     let createUserStatus = userService.createUser(user);
     if (createUserStatus) {
-        return res.status(status.OK).send(new ApiResponse(status.OK,message ='user is created'));
+        return res.status(status.OK).send(new ApiResponse(status.OK, 'This user has successfully created'));
     }
     return res.status(status.OK)
-    .send(new ApiError(status.OK,message= 'something went wrong'));
+        .send(new ApiError(status.OK, message = 'something went wrong'));
 };
 
 //update user
@@ -45,10 +52,10 @@ updateUser = (req, res) => {
     if (userService.isIdExist(user)) {
         let userUpdated = userService.updateUser(req.body);
         res.status(status.OK)
-            .send(new ApiResponse(status.OK,message= "The User has been updated"));
+            .send(new ApiResponse(status.OK, message = "The User has been updated"));
     }
     res.status(status.NOT_FOUND)
-        .send(new ApiError(status.NOT_FOUND,message= 'This user does not exist'));
+        .send(new ApiError(status.NOT_FOUND, message = 'This user does not exist'));
 };
 
 //delete user
@@ -57,10 +64,10 @@ deleteUser = (req, res) => {
     if (userService.isIdExist(user)) {
         let userfilter = userService.deleteUser(user);
         return res.status(status.OK)
-        .send(new ApiResponse(status.OK,message= `user with id: ${user} is deleted`));
+            .send(new ApiResponse(status.OK, message = `This user has been deleted`));
     }
     return res.status(status.NOT_FOUND)
-    .send(new ApiError(status.NOT_FOUND, message= "this user is not exist"));
+        .send(new ApiError(status.NOT_FOUND, message = "This user doest not exist"));
 };
 
 /**

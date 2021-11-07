@@ -1,0 +1,13 @@
+{
+    "unkownApiError": "API non trovata",
+    "login": "Bene! sei loggato con successo",
+    "signUp": "Bene!ti sei registrato con successo",
+    "userNotExist": "Questo utente non esiste",
+    "userExists": "Questo utente esiste già",
+    "userIsCreated": "Questo utente ha creato con successo",
+    "CreateError": "qualcosa è andato storto ",
+    "userUpdated": "L'utente è stato aggiornato",
+    "UpdateError": "Questo utente non esiste",
+    "deleteUser": "Questo utente è stato cancellato",
+    "deleteError": "Questo utente non esiste"
+}
