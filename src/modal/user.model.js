@@ -22,6 +22,7 @@ const create = async(user) => {
                 insert into users (userId,firstName,lastName,email,password,active)
                 values (USER_SEQ.nextval,:firstName,:lastNam,:email, :password)
                 `, [firstName, lastName, email, password, active]);
+    console.log(result);
     if (result.rowsAffected === 1)
         return true;
     return false;

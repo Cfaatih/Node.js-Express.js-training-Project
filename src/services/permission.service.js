@@ -2,7 +2,7 @@ const { permissionModel } = require('../modal');
 
 const getPermissions = () => permissionModel.getPermissions();
 
-const getRolePermissions = () => permissionModel.getRolePermissions();
+const getRolePermissions = (userRole) => permissionModel.getRolePermissions(userRole);
 module.exports = {
     getPermissions,
     getRolePermissions

@@ -7,3 +7,6 @@ Process ID: 0
 Session ID: 0 Serial number: 0
 2021-11-14T11:43:44.930Z [myBiolerPlate] [31merror[39m:ORA-12170: NS:Connect timeout occurredT
 2021-11-14T15:51:32.781Z [myBiolerPlate] [31merror[39m:User already exist
+2021-11-14T20:54:05.049Z [myBiolerPlate] [31merror[39m:ORA-01036: illegal variable name/number
+2021-11-14T20:54:43.273Z [myBiolerPlate] [31merror[39m:ORA-01036: illegal variable name/number
+2021-11-14T20:57:47.994Z [myBiolerPlate] [31merror[39m:ORA-01036: illegal variable name/number
