@@ -1,0 +1,9 @@
+2021-11-14T09:47:58.397Z [myBiolerPlate] [31merror[39m:ORA-12170: TNS:Connect timeout occurred
+2021-11-14T11:23:00.533Z [myBiolerPlate] [31merror[39m:The user does not exist
+2021-11-14T11:25:09.128Z [myBiolerPlate] [31merror[39m:The user does not exist
+2021-11-14T11:25:26.800Z [myBiolerPlate] [31merror[39m:The user does not exist
+2021-11-14T11:42:38.321Z [myBiolerPlate] [31merror[39m:ORA-03135: connection lost contact
+Process ID: 0
+Session ID: 0 Serial number: 0
+2021-11-14T11:43:44.930Z [myBiolerPlate] [31merror[39m:ORA-12170: NS:Connect timeout occurredT
+2021-11-14T15:51:32.781Z [myBiolerPlate] [31merror[39m:User already exist

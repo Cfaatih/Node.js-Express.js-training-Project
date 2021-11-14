@@ -5,7 +5,7 @@ const myformat = printf(({ level, message, label, timestamp }) => {
     return `${timestamp} [${label}] ${level}:${message}`;
 });
 
-// create logger
+// creating logger
 const logger = winston.createLogger({
     format: combine(
         winston.format.colorize(),
@@ -15,8 +15,9 @@ const logger = winston.createLogger({
     ),
     transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'combine.log' }),
+        new winston.transports.File({ filename: 'src/logs/error.log', level: 'error' }),
+        new winston.transports.File({ filename: 'src/logs/combine.log' }),
+        new winston.transports.File({ filename: 'src/logs/http.log', level: 'http' })
     ],
 });
 

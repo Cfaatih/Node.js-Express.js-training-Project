@@ -4,6 +4,9 @@ const handleAsync = (fn) => (req, res, next) => {
 };
 
 const parseDatabaseObject = (data) => {
+    if (!data.metaData || !data.rows) {
+        return data;
+    }
     let coloums = data.metaData;
     let rows = data.rows;
     let databaseResult = [];
@@ -11,12 +14,10 @@ const parseDatabaseObject = (data) => {
     rows.forEach((row, i) => {
         var obj = {};
         coloums.map((p, j) => {
-            obj[p.name] = row[j];
+            obj[p.name.toLowerCase()] = row[j];
         });
         databaseResult.push(obj);
     });
-    // console.log(arr);
-
     return databaseResult;
 };
 

@@ -1,21 +1,18 @@
 const express = require('express');
-// creating router
+
+/**
+ * middlwares
+ */
 const route = express.Router();
-//import the controller for users
 const { usersController } = require('../../controller');
-
-//import the validation
 const { userValidation } = require('../../validations');
-
-//import the middleware
 const { validate } = require('../../middlewares');
-const { authMiddleware } = require('../../middlewares')
+const { authentication, authorization } = require('../../middlewares');
 
-//route.get('/', authMiddleware.auth, usersController.getAllUsers);
-route.get('/', usersController.getAllUsers);
-route.get('/:userId', usersController.getUserById);
-route.post('/create', validate(userValidation.createUser), usersController.create);
-route.patch('/update', validate(userValidation.updateUser), usersController.updateUser);
-route.delete('/:userId', usersController.deleteUser);
+route.get('/', authentication, authorization('viewAllUsers'), usersController.getAllUsers);
+route.get('/userId', authentication, authorization('viewUserByEmail'), validate(userValidation.getUserById), usersController.getUserById);
+route.post('/create', authentication, authorization('createUser'), validate(userValidation.createUser), usersController.create);
+route.patch('/update', authentication, authorization('updateUser'), validate(userValidation.updateUser), usersController.updateUser);
+route.delete('/delete', authentication, authorization('deleteUser'), validate(userValidation.deleteUser), usersController.deleteUser);
 
 module.exports = route;

@@ -1,6 +1,10 @@
 const validate = require('./validator');
-const authMiddleware = require('./auth');
+const morganMiddleware = require('./morgan');
+const authentication = require('./auth').auth;
+const authorization = require('./auth').authorization;
 module.exports = {
     validate,
-    authMiddleware
+    authentication,
+    authorization,
+    morganMiddleware
 };

@@ -9,5 +9,6 @@
     "userUpdated": "L'utente è stato aggiornato",
     "UpdateError": "Questo utente non esiste",
     "deleteUser": "Questo utente è stato cancellato",
-    "deleteError": "Questo utente non esiste"
+    "deleteError": "Questo utente non esiste",
+    "authServiceError": "email o password non esistono"
 }

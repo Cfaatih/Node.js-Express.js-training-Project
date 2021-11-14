@@ -10,73 +10,101 @@ const { handleAsync } = require('../utils/util');
 
 //get all users
 getAllUsers = handleAsync(async(req, res) => {
-    // let message = res.__('getUserByIdError')
-    // console.log(message);
-
+    logger.info('All users controller is working');
     let users = await userService.getAllUsers();
-
-    res.status(status.OK).send(new ApiResponse(status.OK, "ok", users));
+    res.status(status.OK).send(new ApiResponse(status.OK, 'OK', users));
 });
 
 //get user by ID
-getUserById = (req, res) => {
-    let userId = req.params.userId;
-    if (userService.isIdExist(userId)) {
-        let userfilter = userService.getUserById(userId);
-        return res.status(status.OK).send(new ApiResponse(status.OK, "OK", userfilter));
-    }
+getUserById = handleAsync(async(req, res) => {
+    logger.info('getUserById controller is working');
+    let user = req.body;
+    let checkIdExistence = await userService.isIdExist(user.id);
 
-    return res.status(status.NOT_FOUND).
-    send(new ApiError(status.NOT_FOUND, "This user does not exist"));
-};
+    if (checkIdExistence) {
+        logger.info('The user exists');
+        let getUser = await userService.getUserById(user.id);
+        return res.status(status.OK).
+        send(new ApiResponse(status.OK, 'Ok', getUser));
+    }
+    return res.status(status.NOT_ACCEPTABLE)
+        .send(new ApiError(status.NOT_ACCEPTABLE, res.__('userNotExist')));
+});
 
 //create user
-create = (req, res) => {
+create = handleAsync(async(req, res) => {
     logger.info('calling create user');
     let user = req.body;
-    if (userService.isEmailExist(user.email)) {
+    let checkEmail = await userService.isEmailExist(user.email);
+
+    if (checkEmail) {
+        logger.error('User already exist');
         return res.status(status.NOT_ACCEPTABLE)
-            .send(new ApiError(status.NOT_ACCEPTABLE, 'User already exist'));
+            .send(new ApiError(status.NOT_ACCEPTABLE, res.__('userExists')));
     }
-    let createUserStatus = userService.createUser(user);
+    let createUserStatus = await userService.createUser(user);
     if (createUserStatus) {
-        return res.status(status.OK).send(new ApiResponse(status.OK, 'This user has successfully created'));
+        logger.info('User Created');
+        return res.status(status.OK).send(new ApiResponse(status.OK, res.__('userIsCreated')));
     }
-    return res.status(status.OK)
-        .send(new ApiError(status.OK, message = 'something went wrong'));
-};
+    return res.status(status.INTERNAL_SERVER_ERROR)
+        .send(new ApiError(status.INTERNAL_SERVER_ERROR, res.__('CreateError')));
+});
 
 //update user
-updateUser = (req, res) => {
-    let user = req.body.id;
-    if (userService.isIdExist(user)) {
-        let userUpdated = userService.updateUser(req.body);
-        res.status(status.OK)
-            .send(new ApiResponse(status.OK, message = "The User has been updated"));
+updateUser = handleAsync(async(req, res) => {
+    logger.info('Calling to user Update');
+    let user = req.body;
+    let checkId = await userService.isIdExist(user.id);
+
+    if (!checkId) {
+        logger.error('The user does not exist');
+        res.status(status.NOT_FOUND)
+            .send(new ApiError(status.NOT_FOUND, res.__('userNotExist')));
     }
-    res.status(status.NOT_FOUND)
-        .send(new ApiError(status.NOT_FOUND, message = 'This user does not exist'));
-};
+
+    let userUpdated = await userService.updateUser(user);
+
+    if (userUpdated) {
+        logger.info('User is Updated');
+        res.status(status.OK)
+            .send(new ApiResponse(status.OK, res.__('userUpdated')));
+    }
+    res.status(status.INTERNAL_SERVER_ERROR)
+        .send(new ApiError(status.INTERNAL_SERVER_ERROR, res.__('CreateError')));
+
+});
 
 //delete user
-deleteUser = (req, res) => {
-    let user = req.params.userId;
-    if (userService.isIdExist(user)) {
-        let userfilter = userService.deleteUser(user);
+deleteUser = handleAsync(async(req, res) => {
+    logger.info('Calling Delete user');
+    let user = req.body;
+    let checkId = await userService.isIdExist(user.id);
+
+    if (!checkId) {
+        logger.error('The user does not exist');
         return res.status(status.OK)
-            .send(new ApiResponse(status.OK, message = `This user has been deleted`));
+            .send(new ApiError(status.OK, res.__('userNotExist')));
     }
-    return res.status(status.NOT_FOUND)
-        .send(new ApiError(status.NOT_FOUND, message = "This user doest not exist"));
-};
+    let userfilter = await userService.deleteUser(user.id);
+
+    if (userfilter) {
+        logger.info('User is deleted');
+        return res.status(status.OK)
+            .send(new ApiResponse(status.OK, res.__('deleteUser')));
+    }
+    res.status(status.INTERNAL_SERVER_ERROR)
+        .send(new ApiError(status.INTERNAL_SERVER_ERROR, res.__('CreateError')));
+
+});
 
 /**
  * export controllers
  */
 module.exports = {
     getAllUsers,
-    getUserById,
-    create,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserById,
+    create
 };

@@ -9,5 +9,6 @@
     "userUpdated": "Isticmaalaha waa la cusboonaysiiyay",
     "UpdateError": "Isticmaalahan ma jiro",
     "deleteUser": "Isticmaalahan waa la tirtiray",
-    "deleteError": "Isticmaalahan ma jiro"
+    "deleteError": "Isticmaalahan ma jiro",
+    "authServiceError": "iimaylka ama erayga sirta ah ma jiro"
 }

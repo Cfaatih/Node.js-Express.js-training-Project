@@ -1,27 +1,34 @@
 const joi = require('joi');
 //validation for create user
 const createUser = joi.object({
-    id: joi.number().required(),
     firstName: joi.string().required(),
-    middleName: joi.string().optional(),
     lastName: joi.string().required(),
     email: joi.string().email().required(),
-    age: joi.number().min(12).max(120),
-    roles: joi.string().required()
+    password: joi.string().required(),
+    confirmPassword: joi.ref('password')
 });
 
 //validation for update user
 const updateUser = joi.object({
     id: joi.number().required(),
     firstName: joi.string().required(),
-    middleName: joi.string().optional(),
     lastName: joi.string().required(),
-    age: joi.number().min(12).max(120),
-    roles: joi.string().required()
+    password: joi.string().required(),
+    active: joi.number()
 });
+
+const deleteUser = joi.object({
+    id: joi.number().required()
+})
+
+const getUserById = joi.object({
+    id: joi.number().required()
+})
 
 //export the validatoins
 module.exports = {
     createUser,
-    updateUser
+    updateUser,
+    deleteUser,
+    getUserById
 };

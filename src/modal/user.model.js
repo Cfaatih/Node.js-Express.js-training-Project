@@ -1,51 +1,83 @@
-//mydb
-
 const database = require('../config/database');
 
 //-----------------------------------------
 const getusers = async() => {
-    let query = `select * from USERS`;
-    let result = await database.executeQuery(query);
-    console.log(result);
+    let query = `select * from users`;
+    let result = await database.executeQuery(query, []);
     return result;
-
-    // return users;
 };
 
-const getuser = (id) => {
-    return users.filter(u => u.id == id);
+const getuser = async(id) => {
+    let result = await database.executeQuery(`select * from users where userId=:id `, [id]);
+    return result;
 };
 
-const create = (user) => {
-    users.push(user);
-    return true;
+const create = async(user) => {
+    let firstName = user.firstName;
+    let lastName = user.lastName;
+    let email = user.email;
+    let password = user.password;
+    let active = 0;
+    let result = await database.executeQuery(`
+                insert into users (userId,firstName,lastName,email,password,active)
+                values (USER_SEQ.nextval,:firstName,:lastNam,:email, :password)
+                `, [firstName, lastName, email, password, active]);
+    if (result.rowsAffected === 1)
+        return true;
+    return false;
 };
 
-const updateUser = (user) => {
-    const objIndex = users.findIndex(obj => obj.id === user.id);
-    users[objIndex].firstName = user.firstName;
-    users[objIndex].middleName = user.middleName;
-    users[objIndex].lastName = user.lastName;
-    users[objIndex].lastName = user.lastName;
+const updateUser = async(user) => {
+    let firstName = user.firstName;
+    let lastName = user.lastName;
+    let userId = user.id;
+    let password = user.password;
+    let active = user.active;
+    let result = await database.executeQuery(`update users set firstName=:firstName,
+    lastName=:lastName,password=:password, active=:active where userId=:userId`, [firstName, lastName, password, active, userId])
+    if (result.rowsAffected === 1)
+        return true;
+    return false;
 }
 
-const deleteUser = (id) => {
-    const objIndex = users.findIndex(obj => obj.id == id);
-    users.splice(objIndex, 1);
+const deleteUser = async(id) => {
+    let result = await database.executeQuery(`delete from users where userId=:id`, [id])
+    if (result.rowsAffected === 1)
+        return true;
+    return false;
+
 };
 
-const isEmailExist = (email) => {
-    return users.filter(u => u.email === email).length > 0;
+const isEmailExist = async(email) => {
+    let result = await database.executeQuery(` select count(*) as emailAlreadyExist from users
+         where email=:email`, [email]);
+    if (result[0].emailalreadyexist > 0)
+        return true;
+
+    return false;
 };
 
-const isIdExist = (id) => {
-    return users.filter(u => u.id == id);
-};
-const getUserByEmailAndPassword = (email, password) => {
-    // let query = `select email, password from USERS`;
-    // let result = database.executeQuery(query);
+const isIdExist = async(id) => {
+    let result = await database.executeQuery(`select count(*) as idAlreadyExist
+     from users
+    where userId=:id`, [id]);
+    if (result[0].idalreadyexist > 0)
+        return true;
 
-    return result.filter(u => u.email === email && u.password === password);
+    return false;
+}
+const getUserByEmailAndPassword = async(email, password) => {
+    let result = await database.executeQuery(`
+    SELECT U.USERID, U.FIRSTNAME,U.LASTNAME, U.EMAIL, R.ROLENAME
+    FROM USERS U
+             INNER JOIN USERROLE UR on U.USERID = UR.userId
+             INNER JOIN ROLES R on UR.roleId = R.ROLEID
+    WHERE EMAIL =:email
+      AND PASSWORD =:password
+      AND ACTIVE = 1`, [email, password]);
+    if (!result)
+        return null;
+    return result[0];
 };
 
 
